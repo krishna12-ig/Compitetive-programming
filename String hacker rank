@@ -1,0 +1,66 @@
+import java.util.*;
+
+public class Solution {
+
+    static int[][] d;
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String s = sc.next();
+
+        int n = s.length();
+
+        d = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(d[i], -1);
+        }
+
+        System.out.println(f(s, 0, n - 1));
+    }
+
+    static int f(String s, int i, int j) {
+
+        if (g(i, j))
+            return 0;
+
+        if (h(i, j))
+            return 1;
+
+        if (d[i][j] != -1)
+            return d[i][j];
+
+        if (k(s, i, j))
+            d[i][j] = l(s, i, j);
+        else
+            d[i][j] = m(s, i, j);
+
+        return d[i][j];
+    }
+
+    static boolean g(int i, int j) {
+        return i > j;
+    }
+
+    static boolean h(int i, int j) {
+        return i == j;
+    }
+
+    static boolean k(String s, int i, int j) {
+        return s.charAt(i) == s.charAt(j);
+    }
+
+    static int l(String s, int i, int j) {
+        return 2 + f(s, i + 1, j - 1);
+    }
+
+    static int m(String s, int i, int j) {
+
+        int a = f(s, i + 1, j);
+        int b = f(s, i, j - 1);
+
+        return Math.max(a, b);
+    }
+}
