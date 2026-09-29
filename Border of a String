@@ -1,0 +1,35 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+
+        int n = s.length();
+        int[] l = new int[n];
+
+        int i = 1;
+        int j = 0;
+
+        while (i < n) {
+            if (s.charAt(i) == s.charAt(j)) {
+                l[i] = j + 1;
+                i++;
+                j++;
+            } else {
+                if (j != 0) {
+                    j = l[j - 1];
+                } else {
+                    l[i] = 0;
+                    i++;
+                }
+            }
+        }
+
+        int k = l[n - 1];
+
+        System.out.println(s.substring(0, k));
+    }
+}
