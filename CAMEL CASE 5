@@ -1,0 +1,47 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+      Scanner sc = new Scanner(System.in);
+
+      if (!sc.hasNextInt()) return;
+      int n = sc.nextInt();
+      sc.nextLine(); // Clear newline buffer
+        String line = sc.nextLine();
+      String dict[] = line.split(",");
+     
+
+    String patt = "";
+    if (sc.hasNext()) {
+        patt = sc.nextLine(); // Or sc.nextLine() depending on your input format
+    }
+    patt = patt.toUpperCase();
+        
+        List<String> res = new ArrayList<>();
+        for (int i = 0; i < n && patt.length() >= 1; i++) {
+            int ind = 0;
+            for (int j = 0; j < dict[i].length(); j++) {
+                if (dict[i].charAt(j) == patt.charAt(ind)) {
+              
+                    ind++;
+                } 
+                if (ind == patt.length()) {
+                    break;
+                }
+            }
+            if (ind >= patt.length()) {
+               
+                res.add(dict[i]);
+            }
+        }
+        if (res.size() == 0) {
+            System.out.println("No match found");
+        }
+        for (int i  = 0; i < res.size(); i++) {
+            System.out.print(res.get(i)+" ");
+        }
+    }
+}
+
