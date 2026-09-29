@@ -1,0 +1,70 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    static long[] egcd(long a, long b) {
+        if (b == 0) {
+            return new long[]{a, 1, 0};
+        }
+
+        long[] t = egcd(b, a % b);
+
+        long d = t[0];
+        long x = t[2];
+        long y = t[1] - (a / b) * t[2];
+
+        return new long[]{d, x, y};
+    }
+
+    static long[] check(long x, long y, long bx, long by) {
+        long v1 = Math.abs(x) + Math.abs(y);
+        long v2 = Math.abs(bx) + Math.abs(by);
+
+        if (v1 < v2 || (v1 == v2 && x <= bx)) {
+            return new long[]{x, y};
+        }
+
+        return new long[]{bx, by};
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        long a = sc.nextLong();
+        long b = sc.nextLong();
+
+        long[] e = egcd(a, b);
+
+        long d = e[0];
+        long x0 = e[1];
+        long y0 = e[2];
+
+        long p = b / d;
+        long q = a / d;
+
+        long bestX = x0;
+        long bestY = y0;
+
+        long k1 = Math.floorDiv(-x0, p);
+        long k2 = Math.floorDiv(y0, q);
+
+        for (long k = k1 - 2; k <= k1 + 2; k++) {
+            long x = x0 + k * p;
+            long y = y0 - k * q;
+            long[] r = check(x, y, bestX, bestY);
+            bestX = r[0];
+            bestY = r[1];
+        }
+
+        for (long k = k2 - 2; k <= k2 + 2; k++) {
+            long x = x0 + k * p;
+            long y = y0 - k * q;
+            long[] r = check(x, y, bestX, bestY);
+            bestX = r[0];
+            bestY = r[1];
+        }
+
+        System.out.println(bestX + " " + bestY + " " + d);
+    }
+}
